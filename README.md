@@ -1,4 +1,4 @@
-# ricopay-frontend
+# Ingressos Br
 
 ## Project setup
 ```

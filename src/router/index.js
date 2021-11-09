@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/login/Login.vue'
-import CadastroEmpresa from '../views/cadastros/CadastroEmpresa.vue'
+import RecuperaSenha from '../views/login/RecuperaSenha.vue'
+import CadastroUsuario from '../views/cadastros/CadastroUsuario.vue'
 import CadastroOperador from '../views/cadastros/CadastroOperador.vue'
 import Configuracao from '../views/configuracoes/Configuracao.vue'
 import CancelarVenda from '../views/operacoes/CancelarVenda.vue'
 import ConsultarVenda from '../views/operacoes/ConsultarVenda.vue'
 import EfetuarVenda from '../views/operacoes/EfetuarVenda.vue'
+import MinhaConta from '../views/minhaConta/MinhaConta.vue'
 
 Vue.use(VueRouter)
 
@@ -15,20 +17,33 @@ Vue.use(VueRouter)
     mode:'hash',
     routes: [
       {
-        path: '/login',
-        name: 'Login',
-        component: Login
-      },
-      {
         path: '/',
         name: 'Home',
         component: Home,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: false }
       },
       {
-        path: '/cadastroEmpresa',
-        name: 'CadastroEmpresa',
-        component: CadastroEmpresa,
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        meta: { requiresAuth: false }
+      },
+      {
+        path: '/recuperaSenha',
+        name: 'RecuperaSenha',
+        component: RecuperaSenha,
+        meta: { requiresAuth: false }
+      },
+      {
+        path: '/cadastroUsuario',
+        name: 'CadastroUsuario',
+        component: CadastroUsuario,
+        meta: { requiresAuth: false }
+      },
+      {
+        path: '/minhaConta',
+        name: 'MinhaConta',
+        component: MinhaConta,
         meta: { requiresAuth: true }
       },
       {
@@ -74,8 +89,8 @@ Vue.use(VueRouter)
 
   router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
-        let auth = sessionStorage.getItem('token')
-        if ((auth === null || auth === 'false') && to.path !== '/login') {
+        let token = localStorage.getItem('token')
+        if (token === null && to.path !== '/login') {
             console.log("Usuário não autenticado");
             next('/login')
         }else {

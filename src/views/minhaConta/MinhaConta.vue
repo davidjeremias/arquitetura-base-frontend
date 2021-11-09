@@ -55,19 +55,19 @@
 
 <script>
   export default {
-    name: 'Menu',
+    name: 'MinhaConta',
     data () {
       return {
         nomeUsuarioLogado: '',
         drawer: true,
         dialog: false,
       items: [
-        { icon: 'mdi-plus-circle', text: 'Cadastro de Empresa', nameRota: 'CadastroEmpresa' },
+        { icon: 'mdi-lead-pencil', text: 'Editar Conta', nameRota: 'CadastroUsuario' },
         { icon: 'mdi-account-plus', text: 'Cadastro de Operador', nameRota: 'CadastroOperador'},
         { icon: 'mdi-credit-card-plus', text: 'Efetuar Vendas', nameRota: 'EfetuarVenda' },
         { icon: 'mdi-credit-card-outline', text: 'Consultar Vendas', nameRota: 'ConsultarVenda' },
         { icon: 'mdi-cancel', text: 'Cancelar Vendas', nameRota: 'CancelarVenda' },
-        { icon: 'mdi-cog', text: 'Configuracao', nameRota: 'Configuracao' }
+        { icon: 'mdi-exit-run', text: 'Sair', nameRota: 'Login' }
       ],
       }
     },
