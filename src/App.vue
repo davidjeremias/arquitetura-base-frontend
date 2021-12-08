@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <AppBar></AppBar>
-    <Menu v-if="false"></Menu>
+    <Menu></Menu>
     <v-main>
       <Loading></Loading>
       <v-container fluid>
@@ -14,14 +13,12 @@
 <script>
 import Loading from '@/views/loading/Loading.vue'
 import Menu from '@/views/templates/Menu.vue'
-import AppBar from '@/views/templates/AppBar.vue'
 export default {
   name: 'App',
   props: {
       source: String,
     },
   components: {
-    AppBar,
     Menu,
     Loading
   },

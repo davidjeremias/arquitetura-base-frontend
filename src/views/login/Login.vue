@@ -54,9 +54,10 @@
                         type="text"
                         required
                         prepend-icon="mdi-gmail"
+                        @keyup="validaCadastro()"
                     ></v-text-field>
                     
-                    <v-btn block rounded color="success" @click="cadastrar">Cadastrar</v-btn>
+                    <v-btn block rounded color="success" :disabled="isButtonCad" @click="cadastrar">Cadastrar</v-btn>
                 </v-container>
             </v-form>
         </v-card-text>
@@ -110,6 +111,7 @@ export default {
             dialog: true,
             valid: false,
             isButton: true,
+            isButtonCad: true,
             isButtonRecuperaSenha: true,
             username: '',
             password: '',
@@ -142,6 +144,7 @@ export default {
     created() {
         if (localStorage.getItem('token') !== null) {
             localStorage.removeItem('token');
+            localStorage.removeItem('userName');
             location.reload();
         }
         if (localStorage.getItem('isUpdated') !== null){
@@ -170,6 +173,14 @@ export default {
                this.isButton = false;
            }
         },
+        validaCadastro(){
+            let valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+           if(!this.email || this.email.length <= 0 || !valid.test(this.email)){
+               this.isButtonCad = true;
+           }else{
+               this.isButtonCad = false;
+           }
+        },
         validaEmailRecuperaSenha(){
            let re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
            if(!this.reEmail || this.reEmail.length <= 0 || !re.test(this.reEmail)){
@@ -189,13 +200,13 @@ export default {
                     }
                     var params = new URLSearchParams();
                     params.append('grant_type', 'password');
-                    params.append('client', 'ingressosbr-web');
+                    params.append('client', 'dflex-web');
                     params.append('username', obj.username);
                     params.append('password', obj.password);
                     return this.$http({
                         method: 'post',
                         url:'oauth/token',
-                        auth:{username: 'ingressosbr-web', password: '415782@U2d'},
+                        auth:{username: 'dflex-web', password: '415782@U2d'},
                         headers: {"Content-type": "application/x-www-form-urlencoded"},
                         data: params
                     }).then(response => {
@@ -203,7 +214,8 @@ export default {
                             localStorage.setItem("token", response.data.access_token);
                             let jwtData = localStorage.getItem('token').split('.')[1];
                             let decodedJwtJsonData = atob(jwtData);
-                            this.loginUsuario = JSON.parse(decodedJwtJsonData).user_name;
+                            let loginUsuario = JSON.parse(decodedJwtJsonData).user_name;
+                            localStorage.setItem("userName", loginUsuario);
                             this.isAuthorized = true;
                             this.toRoute("Home");    
                             location.reload();

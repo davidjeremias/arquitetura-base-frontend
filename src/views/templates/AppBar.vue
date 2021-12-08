@@ -1,6 +1,6 @@
 	<template>
 <div>
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="red darken-3" dark elevation="10" height="70">
+    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="green darken-3" dark elevation="10" height="70">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title class="ml-10 pl-10">
         <v-btn text @click="toRoute('Home')">
